@@ -1,0 +1,58 @@
+1. =======================================================================================
+select u1.ID,u1.UserName,u2.UserName as ParentUserName 
+from USER u1 left join USER u2 on u1.ID=u2.Parent
+==========================================================================================
+
+3. =======================================================================================
+function findFirstStringInBracket(str){
+  let result='';
+  if(str.length){
+     const openBracketIndex= str.indexOf("(");
+     const closeBracketIndex=  str.indexOf(")");
+     if(openBracketIndex>=0 && closeBracketIndex>=0){
+       const indexAfterFirstOpenBracket=openBracketIndex+1;
+       const  indexBeforeFirstCloseBracket=closeBracketIndex-openBracketIndex-1
+       result= str.substr(indexAfterFirstOpenBracket,indexBeforeFirstCloseBracket )
+     }
+  }
+  return result;
+}
+==========================================================================================
+
+4. ========================================================================================
+function isAnagram(stringA, stringB) {
+    stringA = stringA.replace(/[^\w]/g, '').toLowerCase()
+    stringB = stringB.replace(/[^\w]/g, '').toLowerCase()
+
+    return constructString(stringA) === constructString(stringB)
+}
+
+function constructString(string) {
+    return string.split('').sort().join('');
+}
+function checkFoundWords(result,word){
+    let isAlreadyFound=false;
+    for(let idx=0;idx<result.length;idx++){
+      if(result.length && result[idx].includes(word)){
+        isAlreadyFound=true;
+        break;
+      }
+    }
+    return isAlreadyFound;
+}
+function groupingAnagrams(arr){
+  const result=[];
+  arr.forEach(word=>{
+    if(!checkFoundWords(result,word)){
+      const sameData=[word];
+      arr.forEach(word2=>{
+        if(word2!==word && isAnagram(word,word2)){
+          sameData.push(word2);
+        }
+      })
+      result.push(sameData);
+    }
+  })
+  return result;
+}
+=========================================================================================
